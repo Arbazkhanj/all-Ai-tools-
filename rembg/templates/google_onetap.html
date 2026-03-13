@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign in - Khan Jan Seva Kendra</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #ffffff;
+            min-height: 100vh;
+            display: flex;
+        }
+
+        /* Left Side - Content */
+        .left-side {
+            flex: 1;
+            padding: 4rem 6rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            max-width: 600px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 3rem;
+        }
+
+        .logo-icon {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+        }
+
+        .logo-text {
+            font-size: 1.4rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 1.1rem;
+            margin-bottom: 2.5rem;
+        }
+
+        /* Google Sign In Button */
+        .google-btn-container {
+            margin-bottom: 1.5rem;
+        }
+
+        .google-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            width: 100%;
+            padding: 1rem 1.5rem;
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 500;
+            color: #444;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+
+        .google-btn:hover {
+            border-color: #667eea;
+            background: #f8f9ff;
+        }
+
+        .google-btn img {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* OR Divider */
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 2rem 0;
+            color: #888;
+            font-size: 0.9rem;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: #e0e0e0;
+        }
+
+        .divider span {
+            padding: 0 1rem;
+        }
+
+        /* Guest Button */
+        .guest-btn {
+            display: block;
+            width: 100%;
+            padding: 1rem 1.5rem;
+            background: #f5f5f5;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 500;
+            color: #555;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .guest-btn:hover {
+            background: #e8e8e8;
+        }
+
+        /* Features */
+        .features {
+            margin-top: 2rem;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 1rem;
+            color: #555;
+            font-size: 0.95rem;
+        }
+
+        .feature-item i {
+            color: #11998e;
+            font-size: 1rem;
+        }
+
+        /* Right Side - Google One Tap Container */
+        .right-side {
+            flex: 1;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .illustration {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .illustration-icon {
+            width: 200px;
+            height: 200px;
+            background: white;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 2rem;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+            font-size: 80px;
+            color: #667eea;
+        }
+
+        .illustration h3 {
+            font-size: 1.5rem;
+            color: #1a1a1a;
+            margin-bottom: 0.5rem;
+        }
+
+        .illustration p {
+            color: #666;
+            font-size: 1rem;
+        }
+
+        /* Google One Tap Custom Container */
+        #google-one-tap-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 9999;
+        }
+
+        /* User Card (shown after login) */
+        .user-card {
+            display: none;
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .user-card.active {
+            display: block;
+        }
+
+        .user-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin-bottom: 1rem;
+            border: 3px solid #667eea;
+        }
+
+        .user-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 0.25rem;
+        }
+
+        .user-email {
+            color: #888;
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .continue-btn {
+            display: inline-block;
+            padding: 0.875rem 2rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .continue-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        /* Loading */
+        .loading-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255,255,255,0.95);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .loading-overlay.active {
+            display: flex;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid #f0f0f0;
+            border-top-color: #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 1rem;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            body {
+                flex-direction: column;
+            }
+            
+            .left-side {
+                padding: 2rem;
+                max-width: 100%;
+            }
+            
+            .right-side {
+                display: none;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="spinner"></div>
+        <p>Signing you in...</p>
+    </div>
+
+    <!-- Left Side -->
+    <div class="left-side">
+        <div class="logo">
+            <div class="logo-icon">
+                <i class="fas fa-magic"></i>
+            </div>
+            <div class="logo-text">Khan Jan Seva Kendra</div>
+        </div>
+
+        <div id="loginSection">
+            <h1>Sign in to your account</h1>
+            <p class="subtitle">Welcome back! Please sign in to continue.</p>
+
+            <!-- Google Sign In Button -->
+            <div class="google-btn-container">
+                <div id="g_id_signin"></div>
+            </div>
+
+            <div class="divider">
+                <span>or</span>
+            </div>
+
+            <a href="/" class="guest-btn">
+                Continue as Guest
+            </a>
+
+            <div class="features">
+                <div class="feature-item">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Remove unlimited backgrounds</span>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Save your processing history</span>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Access from any device</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- User Info (shown after login) -->
+        <div class="user-card" id="userCard">
+            <img src="" alt="Profile" class="user-avatar" id="userAvatar">
+            <div class="user-name" id="userName"></div>
+            <div class="user-email" id="userEmail"></div>
+            <a href="/" class="continue-btn">
+                Continue to Dashboard <i class="fas fa-arrow-right" style="margin-left: 8px;"></i>
+            </a>
+            <br><br>
+            <a href="/auth/logout" style="color: #888; font-size: 0.9rem; text-decoration: none;">
+                Sign out
+            </a>
+        </div>
+    </div>
+
+    <!-- Right Side - Illustration -->
+    <div class="right-side">
+        <div class="illustration">
+            <div class="illustration-icon">
+                <i class="fas fa-image"></i>
+            </div>
+            <h3>AI-Powered Background Removal</h3>
+            <p>Remove backgrounds from images<br>in seconds with our advanced AI</p>
+        </div>
+    </div>
+
+    <!-- Google One Tap Container (Top Right) -->
+    <div id="google-one-tap-container"></div>
+
+    <!-- Google Identity Services -->
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+
+    <script>
+        // ============================================
+        // CONFIGURATION - Google Client ID
+        // ============================================
+        const GOOGLE_CLIENT_ID = '894379656916-rtiufltvtpemq1fu8mpi0guq5hm486lc.apps.googleusercontent.com';
+        const BACKEND_URL = window.location.origin;
+
+        // ============================================
+        // INITIALIZE GOOGLE ONE TAP
+        // ============================================
+        window.onload = function () {
+            // Initialize Google Identity Services
+            google.accounts.id.initialize({
+                client_id: GOOGLE_CLIENT_ID,
+                callback: handleCredentialResponse,
+                auto_select: true,  // Auto-select if only one account
+                cancel_on_tap_outside: false,  // Don't cancel when clicking outside
+                context: 'signin',  // Context: signin, signup, or use
+                ux_mode: 'popup',   // Show as popup
+                itp_support: true,  // Support for Intelligent Tracking Prevention
+            });
+
+            // Display the One Tap prompt (appears top-right automatically)
+            google.accounts.id.prompt((notification) => {
+                if (notification.isNotDisplayed()) {
+                    console.log('One Tap not displayed:', notification.getNotDisplayedReason());
+                    // Render button as fallback
+                    renderGoogleButton();
+                } else if (notification.isSkippedMoment()) {
+                    console.log('One Tap skipped:', notification.getDismissedReason());
+                    renderGoogleButton();
+                } else {
+                    console.log('One Tap is displayed');
+                }
+            });
+
+            // Also render the button
+            renderGoogleButton();
+        };
+
+        // Render Google Sign-In Button
+        function renderGoogleButton() {
+            const buttonContainer = document.getElementById('g_id_signin');
+            if (!buttonContainer) return;
+
+            google.accounts.id.renderButton(
+                buttonContainer,
+                {
+                    theme: 'outline',       // outline | filled_blue | filled_black
+                    size: 'large',          // small | medium | large
+                    width: '100%',          // Full width
+                    text: 'continue_with',  // signin_with | signup_with | continue_with
+                    shape: 'rectangular',   // rectangular | pill | circle | square
+                    logo_alignment: 'left', // left | center
+                    type: 'standard',       // standard | icon
+                }
+            );
+        }
+
+        // ============================================
+        // HANDLE GOOGLE CREDENTIAL
+        // ============================================
+        async function handleCredentialResponse(response) {
+            console.log('Google credential received');
+            
+            // Show loading
+            document.getElementById('loadingOverlay').classList.add('active');
+
+            try {
+                // Send token to backend
+                const result = await fetch(`${BACKEND_URL}/auth/google/token`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        credential: response.credential,
+                        client_id: GOOGLE_CLIENT_ID
+                    })
+                });
+
+                const data = await result.json();
+
+                if (data.success) {
+                    // Store user data
+                    localStorage.setItem('user', JSON.stringify(data.user));
+                    
+                    // Show user card
+                    showUserCard(data.user);
+                    
+                    // Redirect after delay
+                    setTimeout(() => {
+                        window.location.href = '/';
+                    }, 2000);
+                } else {
+                    alert('Login failed: ' + data.message);
+                    document.getElementById('loadingOverlay').classList.remove('active');
+                }
+            } catch (error) {
+                console.error('Auth error:', error);
+                alert('Authentication failed. Please try again.');
+                document.getElementById('loadingOverlay').classList.remove('active');
+            }
+        }
+
+        // ============================================
+        // UI FUNCTIONS
+        // ============================================
+        function showUserCard(user) {
+            document.getElementById('loginSection').style.display = 'none';
+            document.getElementById('userCard').classList.add('active');
+            
+            document.getElementById('userName').textContent = user.name || 'User';
+            document.getElementById('userEmail').textContent = user.email || '';
+            
+            if (user.picture) {
+                document.getElementById('userAvatar').src = user.picture;
+            } else {
+                const name = user.name || user.email || 'U';
+                document.getElementById('userAvatar').src = 
+                    `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=667eea&color=fff&size=200`;
+            }
+        }
+
+        // Check if already logged in
+        function checkExistingLogin() {
+            const userStr = localStorage.getItem('user');
+            if (userStr) {
+                try {
+                    const user = JSON.parse(userStr);
+                    showUserCard(user);
+                } catch (e) {
+                    console.error('Invalid user data');
+                }
+            }
+        }
+
+        // Check on load
+        checkExistingLogin();
+    </script>
+</body>
+</html>

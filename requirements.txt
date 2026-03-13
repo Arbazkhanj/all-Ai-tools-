@@ -1,0 +1,13 @@
+# Core dependencies
+rembg[cpu,cli]
+
+# Auth dependencies
+python-jose
+authlib
+itsdangerous
+google-auth
+
+# Server
+uvicorn
+fastapi
+aiohttp

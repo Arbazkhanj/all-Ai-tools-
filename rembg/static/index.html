@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Khan Jan Seva Kendra - Remove Background from Image</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #ffffff;
+            color: #1a1a1a;
+            line-height: 1.6;
+        }
+
+        /* Navbar */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 3rem;
+            background: #fff;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.08);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+        }
+
+        .logo-text {
+            font-size: 1.4rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .logo-tagline {
+            font-size: 0.7rem;
+            color: #666;
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #555;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #667eea;
+        }
+
+        .nav-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white !important;
+            padding: 0.6rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600 !important;
+        }
+
+        .nav-btn-outline {
+            border: 2px solid #667eea;
+            color: #667eea !important;
+            padding: 0.5rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600 !important;
+            transition: all 0.3s;
+        }
+
+        .nav-btn-outline:hover {
+            background: #667eea;
+            color: white !important;
+        }
+
+        /* User Profile in Navbar */
+        .user-profile {
+            display: none;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .user-profile.active {
+            display: flex;
+        }
+
+        .user-avatar-small {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #667eea;
+        }
+
+        .user-name-nav {
+            font-weight: 600;
+            color: #444;
+            font-size: 0.9rem;
+        }
+
+        .user-dropdown {
+            position: absolute;
+            top: 50px;
+            right: 0;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+            padding: 0.75rem 0;
+            min-width: 180px;
+            display: none;
+            z-index: 1001;
+        }
+
+        .user-profile:hover .user-dropdown {
+            display: block;
+        }
+
+        .user-dropdown a {
+            display: block;
+            padding: 0.75rem 1.25rem;
+            color: #555;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: background 0.2s;
+        }
+
+        .user-dropdown a:hover {
+            background: #f5f7fa;
+            color: #667eea;
+        }
+
+        .user-dropdown hr {
+            border: none;
+            border-top: 1px solid #eee;
+            margin: 0.5rem 0;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 120px 20px 60px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            color: #1a1a1a;
+            line-height: 1.2;
+        }
+
+        .hero h1 span {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: #666;
+            margin-bottom: 2.5rem;
+            max-width: 600px;
+        }
+
+        /* Upload Area */
+        .upload-container {
+            background: white;
+            border-radius: 24px;
+            padding: 3rem;
+            box-shadow: 0 25px 80px rgba(0,0,0,0.15);
+            max-width: 700px;
+            width: 100%;
+        }
+
+        .upload-area {
+            border: 3px dashed #c3cfe2;
+            border-radius: 16px;
+            padding: 4rem 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: #fafbfc;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .upload-area:hover {
+            border-color: #667eea;
+            background: #f0f4ff;
+            transform: translateY(-2px);
+        }
+
+        .upload-area.dragover {
+            border-color: #667eea;
+            background: linear-gradient(135deg, #f0f4ff 0%, #e8edff 100%);
+            transform: scale(1.02);
+        }
+
+        .upload-area.uploading {
+            pointer-events: none;
+        }
+
+        .upload-icon {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            color: white;
+            font-size: 40px;
+        }
+
+        .upload-area h3 {
+            font-size: 1.5rem;
+            color: #1a1a1a;
+            margin-bottom: 0.5rem;
+        }
+
+        .upload-area p {
+            color: #888;
+            margin-bottom: 1.5rem;
+        }
+
+        .upload-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 1rem 2.5rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .upload-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.5);
+        }
+
+        .file-types {
+            margin-top: 1rem;
+            font-size: 0.85rem;
+            color: #999;
+        }
+
+        /* Options Section */
+        .options {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid #eee;
+        }
+
+        .option-row {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .option-group {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .option-group label {
+            display: block;
+            font-weight: 600;
+            color: #444;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .option-group select {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            background: white;
+            cursor: pointer;
+            transition: border-color 0.3s;
+        }
+
+        .option-group select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .model-info {
+            color: #667eea;
+            font-weight: 500;
+            font-size: 0.85rem;
+        }
+
+        .model-warning {
+            display: block;
+            margin-top: 0.5rem;
+            padding: 0.5rem 0.75rem;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .model-warning.warning {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffc107;
+        }
+
+        .model-warning.danger {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .model-warning.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        /* Result Section */
+        .result-section {
+            display: none;
+            margin-top: 2rem;
+        }
+
+        .result-section.active {
+            display: block;
+        }
+
+        .comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .image-box {
+            background: #f5f7fa;
+            border-radius: 16px;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .image-box h4 {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .image-box img {
+            max-width: 100%;
+            max-height: 350px;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+
+        .download-section {
+            text-align: center;
+        }
+
+        .download-btn {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            color: white;
+            border: none;
+            padding: 1rem 3rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 10px 30px rgba(17, 153, 142, 0.4);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 40px rgba(17, 153, 142, 0.5);
+        }
+
+        .new-image-btn {
+            background: transparent;
+            color: #667eea;
+            border: 2px solid #667eea;
+            padding: 1rem 2rem;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-left: 1rem;
+        }
+
+        .new-image-btn:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        /* Loading */
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 3rem;
+        }
+
+        .loading.active {
+            display: block;
+        }
+
+        .spinner {
+            width: 80px;
+            height: 80px;
+            border: 6px solid #f0f0f0;
+            border-top-color: #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1.5rem;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .loading p {
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 6rem 2rem;
+            background: white;
+        }
+
+        .features-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .features h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #1a1a1a;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .feature-card {
+            text-align: center;
+            padding: 2.5rem 2rem;
+            border-radius: 20px;
+            background: #fafbfc;
+            transition: all 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+        }
+
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            color: white;
+            font-size: 32px;
+        }
+
+        .feature-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.75rem;
+            color: #1a1a1a;
+        }
+
+        .feature-card p {
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        /* Footer */
+        .footer {
+            background: #1a1a2e;
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        .footer-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .footer p {
+            color: #888;
+            font-size: 0.9rem;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 1.5rem 0;
+        }
+
+        .footer-links a {
+            color: #aaa;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 1rem 1.5rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .upload-container {
+                padding: 2rem 1.5rem;
+            }
+
+            .upload-area {
+                padding: 2.5rem 1.5rem;
+            }
+
+            .comparison {
+                grid-template-columns: 1fr;
+            }
+
+            .download-btn, .new-image-btn {
+                width: 100%;
+                margin: 0.5rem 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <a href="#" class="logo">
+            <div class="logo-icon">
+                <i class="fas fa-magic"></i>
+            </div>
+            <div>
+                <div class="logo-text">Khan Jan Seva Kendra</div>
+                <div class="logo-tagline">AI Background Remover</div>
+            </div>
+        </a>
+        <div class="nav-links">
+            <a href="#how-it-works">How it Works</a>
+            <a href="#features">Features</a>
+            <a href="/api">API Docs</a>
+            
+            <!-- Login Button (shown when not logged in) -->
+            <a href="/login" id="loginBtn" class="nav-btn-outline">Sign In</a>
+            
+            <!-- User Profile (shown when logged in) -->
+            <div class="user-profile" id="userProfile">
+                <img src="" alt="User" class="user-avatar-small" id="navUserAvatar">
+                <span class="user-name-nav" id="navUserName">User</span>
+                <i class="fas fa-chevron-down" style="font-size: 0.75rem; color: #888;"></i>
+                <div class="user-dropdown">
+                    <a href="/" style="font-weight: 600;"><i class="fas fa-home" style="margin-right: 8px;"></i>Dashboard</a>
+                    <a href="#"><i class="fas fa-history" style="margin-right: 8px;"></i>History</a>
+                    <a href="#"><i class="fas fa-cog" style="margin-right: 8px;"></i>Settings</a>
+                    <hr>
+                    <a href="/auth/logout" style="color: #dc3545;"><i class="fas fa-sign-out-alt" style="margin-right: 8px;"></i>Sign Out</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>Remove Image Background <span>100% Automatically</span></h1>
+        <p>Upload your image and get a transparent background in 5 seconds. Powered by AI, trusted by professionals.</p>
+        
+        <div class="upload-container">
+            <!-- Upload Area -->
+            <div class="upload-section" id="uploadSection">
+                <div class="upload-area" id="dropZone">
+                    <div class="upload-icon">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                    </div>
+                    <h3>Drop your image here</h3>
+                    <p>or click to browse from your device</p>
+                    <button class="upload-btn">Upload Image</button>
+                    <p class="file-types">Supports: JPG, PNG, WEBP • Max 12MB</p>
+                    <input type="file" id="fileInput" accept="image/*" hidden>
+                </div>
+            </div>
+
+            <!-- Loading -->
+            <div class="loading" id="loadingSection">
+                <div class="spinner"></div>
+                <p id="loadingText">Removing background with AI magic...</p>
+                <small id="loadingSubtext" style="color: #888; display: block; margin-top: 0.5rem;"></small>
+            </div>
+
+            <!-- Result -->
+            <div class="result-section" id="resultSection">
+                <div class="comparison">
+                    <div class="image-box">
+                        <h4>Original</h4>
+                        <img id="originalImage" src="" alt="Original">
+                    </div>
+                    <div class="image-box">
+                        <h4>Result</h4>
+                        <img id="resultImage" src="" alt="Result">
+                    </div>
+                </div>
+                <div class="download-section">
+                    <a id="downloadLink" href="#" download class="download-btn">
+                        <i class="fas fa-download"></i> Download HD Image
+                    </a>
+                    <button class="new-image-btn" onclick="resetUpload()">Process New Image</button>
+                </div>
+            </div>
+
+            <!-- Options -->
+            <div class="options">
+                <div class="option-row">
+                    <div class="option-group">
+                        <label for="model">AI Model <span id="modelInfo" class="model-info"></span></label>
+                        <select id="model" onchange="updateModelInfo()">
+                            <option value="u2net" data-size="168MB" data-time="5s">⚡ General (U2Net) - Fast</option>
+                            <option value="u2netp" data-size="4MB" data-time="3s">🚀 Lightweight (U2Netp) - Super Fast</option>
+                            <option value="u2net_human_seg" data-size="168MB" data-time="5s">👤 Human Portrait - Recommended</option>
+                            <option value="u2net_cloth_seg" data-size="168MB" data-time="5s">👕 Clothing</option>
+                            <option value="isnet-anime" data-size="176MB" data-time="6s">🎨 Anime/Cartoon</option>
+                            <option value="bria-rmbg" data-size="160MB" data-time="5s">⭐ BRIA RMBG 2.0 - Best Quality</option>
+                            <option value="birefnet-general" data-size="824MB" data-time="2-3min">💎 Premium HD (BiRefNet) - Slow</option>
+                            <option value="birefnet-portrait" data-size="928MB" data-time="3-4min">🐢 Portrait HD - Very Slow</option>
+                        </select>
+                        <small id="modelWarning" class="model-warning"></small>
+                    </div>
+                    <div class="option-group">
+                        <label for="format">Output Format</label>
+                        <select id="format">
+                            <option value="png">PNG (Transparent)</option>
+                            <option value="jpg">JPG (White BG)</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="features-container">
+            <h2>Why Choose Khan Jan Seva Kendra?</h2>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3>Lightning Fast</h3>
+                    <p>Remove backgrounds in just 5 seconds with our optimized AI processing.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3>AI Powered</h3>
+                    <p>Advanced deep learning algorithms for pixel-perfect cutouts every time.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>100% Secure</h3>
+                    <p>Your images are processed locally and never stored on our servers.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-infinity"></i>
+                    </div>
+                    <h3>Unlimited Free</h3>
+                    <p>No registration required. Remove backgrounds as many times as you want.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-logo">Khan Jan Seva Kendra</div>
+        <p>AI-powered background removal for everyone</p>
+        <div class="footer-links">
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms of Service</a>
+            <a href="#">Contact</a>
+        </div>
+        <p style="margin-top: 1rem; font-size: 0.8rem;">© 2024 Khan Jan Seva Kendra. All rights reserved.</p>
+    </footer>
+
+    <script>
+        const dropZone = document.getElementById('dropZone');
+        const fileInput = document.getElementById('fileInput');
+        const uploadSection = document.getElementById('uploadSection');
+        const loadingSection = document.getElementById('loadingSection');
+        const resultSection = document.getElementById('resultSection');
+        const originalImage = document.getElementById('originalImage');
+        const resultImage = document.getElementById('resultImage');
+        const downloadLink = document.getElementById('downloadLink');
+        const loadingText = document.getElementById('loadingText');
+        const loadingSubtext = document.getElementById('loadingSubtext');
+        const modelSelect = document.getElementById('model');
+        const modelWarning = document.getElementById('modelWarning');
+        const loginBtn = document.getElementById('loginBtn');
+        const userProfile = document.getElementById('userProfile');
+        const navUserAvatar = document.getElementById('navUserAvatar');
+        const navUserName = document.getElementById('navUserName');
+
+        // Check for logged in user (from server injection or localStorage)
+        if (typeof window.currentUser !== 'undefined' && window.currentUser) {
+            showLoggedInUser(window.currentUser);
+            localStorage.setItem('user', JSON.stringify(window.currentUser));
+        } else {
+            // Check localStorage for Google One Tap login
+            const userStr = localStorage.getItem('user');
+            if (userStr) {
+                try {
+                    const user = JSON.parse(userStr);
+                    showLoggedInUser(user);
+                } catch (e) {
+                    console.log('No user logged in');
+                }
+            }
+        }
+
+        function showLoggedInUser(user) {
+            loginBtn.style.display = 'none';
+            userProfile.classList.add('active');
+            navUserName.textContent = user.name || user.email || 'User';
+            if (user.picture) {
+                navUserAvatar.src = user.picture;
+            } else {
+                const name = user.name || user.email || 'U';
+                navUserAvatar.src = 'https://ui-avatars.com/api/?name=' + encodeURIComponent(name) + '&background=667eea&color=fff&size=100';
+            }
+        }
+
+        // Initialize model info
+        updateModelInfo();
+
+        function updateModelInfo() {
+            const selected = modelSelect.options[modelSelect.selectedIndex];
+            const size = selected.dataset.size;
+            const time = selected.dataset.time;
+            const value = selected.value;
+            
+            modelWarning.className = 'model-warning';
+            
+            if (value.includes('birefnet')) {
+                modelWarning.classList.add('danger');
+                modelWarning.innerHTML = `⚠️ <strong>Large Model (${size})</strong><br>First use: ${time} load time. Heavy RAM usage.`;
+            } else if (value === 'bria-rmbg') {
+                modelWarning.classList.add('success');
+                modelWarning.innerHTML = `✅ <strong>Best Balance</strong> (${size}) - ~${time}`;
+            } else if (value === 'u2netp') {
+                modelWarning.classList.add('success');
+                modelWarning.innerHTML = `⚡ <strong>Fastest</strong> (${size}) - ~${time}`;
+            } else {
+                modelWarning.classList.add('success');
+                modelWarning.innerHTML = `✅ Recommended (${size}) - ~${time}`;
+            }
+        }
+
+        // Drag and drop events
+        dropZone.addEventListener('click', () => fileInput.click());
+        
+        dropZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropZone.classList.add('dragover');
+        });
+
+        dropZone.addEventListener('dragleave', () => {
+            dropZone.classList.remove('dragover');
+        });
+
+        dropZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropZone.classList.remove('dragover');
+            const files = e.dataTransfer.files;
+            if (files.length) handleFile(files[0]);
+        });
+
+        fileInput.addEventListener('change', (e) => {
+            if (e.target.files.length) handleFile(e.target.files[0]);
+        });
+
+        function handleFile(file) {
+            if (!file.type.startsWith('image/')) {
+                alert('Please upload an image file');
+                return;
+            }
+
+            if (file.size > 12 * 1024 * 1024) {
+                alert('File size should be less than 12MB');
+                return;
+            }
+
+            // Show original image
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                originalImage.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+
+            // Show loading with model-specific message
+            uploadSection.style.display = 'none';
+            loadingSection.classList.add('active');
+            
+            const selectedModel = modelSelect.value;
+            if (selectedModel.includes('birefnet')) {
+                loadingText.textContent = 'Loading Premium AI Model...';
+                loadingSubtext.textContent = 'Large model (900MB+) loading into memory. This may take 2-4 minutes on first use. Please wait...';
+            } else {
+                loadingText.textContent = 'Removing background with AI magic...';
+                loadingSubtext.textContent = 'Processing your image...';
+            }
+
+            // Process image
+            processImage(file);
+        }
+
+        async function processImage(file) {
+            const formData = new FormData();
+            formData.append('file', file);
+            formData.append('model', document.getElementById('model').value);
+
+            try {
+                const response = await fetch('/api/remove', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (!response.ok) throw new Error('Processing failed');
+
+                const blob = await response.blob();
+                const url = URL.createObjectURL(blob);
+
+                // Show result
+                loadingSection.classList.remove('active');
+                resultSection.classList.add('active');
+                resultImage.src = url;
+                downloadLink.href = url;
+                downloadLink.download = 'khan-jan-result.png';
+            } catch (error) {
+                alert('Error processing image: ' + error.message);
+                resetUpload();
+            }
+        }
+
+        function resetUpload() {
+            uploadSection.style.display = 'block';
+            loadingSection.classList.remove('active');
+            resultSection.classList.remove('active');
+            fileInput.value = '';
+            loadingText.textContent = 'Removing background with AI magic...';
+            loadingSubtext.textContent = '';
+        }
+    </script>
+</body>
+</html>
