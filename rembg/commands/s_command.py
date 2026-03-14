@@ -57,28 +57,23 @@ oauth = OAuth()
 GOOGLE_CLIENT_ID = os.environ.get('GOOGLE_CLIENT_ID', '894379656916-rtiufltvtpemq1fu8mpi0guq5hm486lc.apps.googleusercontent.com')
 GOOGLE_CLIENT_SECRET = os.environ.get('GOOGLE_CLIENT_SECRET', '')
 
-# Validate OAuth configuration
-if not GOOGLE_CLIENT_SECRET:
+# OAuth setup - only if secret is configured
+oauth_enabled = bool(GOOGLE_CLIENT_SECRET)
+if not oauth_enabled:
     print("⚠️  WARNING: GOOGLE_CLIENT_SECRET not set!")
-    print("   Set this environment variable to enable Google OAuth.")
-    print("   Run: export GOOGLE_CLIENT_SECRET='your-client-secret'")
+    print("   Google OAuth is DISABLED. Set GOOGLE_CLIENT_SECRET to enable.")
     print("")
-    print("   To get your Client Secret:")
-    print("   1. Go to https://console.cloud.google.com/apis/credentials")
-    print("   2. Click on your OAuth 2.0 Client ID")
-    print("   3. Copy the Client Secret")
-    raise SystemExit(1)
-
-# Register OAuth
-oauth.register(
-    name='google',
-    client_id=GOOGLE_CLIENT_ID,
-    client_secret=GOOGLE_CLIENT_SECRET,
-    server_metadata_url='https://accounts.google.com/.well-known/openid-configuration',
-    client_kwargs={
-        'scope': 'openid email profile'
-    }
-)
+else:
+    # Register OAuth
+    oauth.register(
+        name='google',
+        client_id=GOOGLE_CLIENT_ID,
+        client_secret=GOOGLE_CLIENT_SECRET,
+        server_metadata_url='https://accounts.google.com/.well-known/openid-configuration',
+        client_kwargs={
+            'scope': 'openid email profile'
+        }
+    )
 
 
 @click.command(
@@ -399,11 +394,15 @@ def s_command(port: int, host: str, log_level: str, threads: int) -> None:
 
     @app.get("/auth/google", tags=["Authentication"])
     async def auth_google(request: Request):
+        if not oauth_enabled:
+            return HTMLResponse(content="<h1>Authentication Disabled</h1><p>Google OAuth is not configured.</p>", status_code=503)
         redirect_uri = request.url_for('auth_google_callback')
         return await oauth.google.authorize_redirect(request, redirect_uri)
 
     @app.get("/auth/callback", tags=["Authentication"])
     async def auth_google_callback(request: Request, db: Session = Depends(get_db)):
+        if not oauth_enabled:
+            return HTMLResponse(content="<h1>Authentication Disabled</h1><p>Google OAuth is not configured.</p>", status_code=503)
         try:
             token = await oauth.google.authorize_access_token(request)
             user_info = token.get('userinfo')
