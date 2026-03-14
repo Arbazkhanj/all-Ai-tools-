@@ -9,8 +9,12 @@ from sqlalchemy.orm import Session, sessionmaker
 
 # Database URL - use SQLite by default, can be configured via environment variable
 # Use /tmp for Railway (ephemeral storage), or current directory for local
-default_db_path = "/tmp/rembg_payments.db" if os.getenv("RAILWAY_ENVIRONMENT") else "./rembg_payments.db"
-DATABASE_URL = os.getenv("DATABASE_URL", f"sqlite:///{default_db_path}")
+if os.getenv("DATABASE_URL"):
+    DATABASE_URL = os.getenv("DATABASE_URL")
+else:
+    # For Railway, use /tmp (writable), else use current directory
+    default_db_path = "/tmp/rembg_payments.db" if os.getenv("RAILWAY_ENVIRONMENT") else "./rembg_payments.db"
+    DATABASE_URL = f"sqlite:///{default_db_path}"
 
 # Create engine
 engine = create_engine(
@@ -45,6 +49,14 @@ def get_db_context() -> Generator[Session, None, None]:
 def init_db() -> None:
     """Initialize database tables."""
     from .models import Base
+    
+    # Ensure directory exists for SQLite
+    if DATABASE_URL.startswith("sqlite"):
+        db_path = DATABASE_URL.replace("sqlite:///", "/")
+        db_dir = os.path.dirname(db_path)
+        if db_dir and not os.path.exists(db_dir):
+            os.makedirs(db_dir, exist_ok=True)
+    
     Base.metadata.create_all(bind=engine)
 
 

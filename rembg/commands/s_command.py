@@ -363,15 +363,27 @@ def s_command(port: int, host: str, log_level: str, threads: int) -> None:
             media_type="image/png",
         )
 
+    # Initialize database lazily - first request will trigger it
+    _db_initialized = False
+    
+    async def ensure_db_initialized():
+        """Ensure database is initialized (call this in endpoints that need DB)."""
+        nonlocal _db_initialized
+        if not _db_initialized:
+            try:
+                init_db()
+                seed_initial_data()
+                _db_initialized = True
+                print("✅ Database initialized successfully")
+            except Exception as e:
+                print(f"⚠️ Database initialization warning: {e}")
+    
     @app.on_event("startup")
     async def startup():
-        # Initialize database (with error handling)
-        try:
-            init_db()
-            seed_initial_data()
-            print("✅ Database initialized successfully")
-        except Exception as e:
-            print(f"⚠️ Database initialization warning: {e}")
+        # Don't block startup - initialize DB in background or on first request
+        # Just do a quick check without blocking
+        import asyncio
+        asyncio.create_task(ensure_db_initialized())
         
         # Open browser in development (skip in production/Railway)
         if not os.getenv("RAILWAY_ENVIRONMENT"):
