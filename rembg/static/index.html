@@ -145,7 +145,7 @@
             border-radius: 12px;
             box-shadow: 0 10px 40px rgba(0,0,0,0.15);
             padding: 0.75rem 0;
-            min-width: 180px;
+            min-width: 200px;
             display: none;
             z-index: 1001;
         }
@@ -172,6 +172,16 @@
             border: none;
             border-top: 1px solid #eee;
             margin: 0.5rem 0;
+        }
+
+        .wallet-badge {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-left: 0.5rem;
         }
 
         /* Hero Section */
@@ -294,6 +304,40 @@
             color: #999;
         }
 
+        /* Free User Notice */
+        .free-notice {
+            background: #fff3e0;
+            border: 1px solid #ffcc80;
+            border-radius: 12px;
+            padding: 1rem;
+            margin-top: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            text-align: left;
+        }
+
+        .free-notice i {
+            color: #f57c00;
+            font-size: 1.5rem;
+        }
+
+        .free-notice h4 {
+            color: #e65100;
+            margin-bottom: 0.25rem;
+        }
+
+        .free-notice p {
+            color: #666;
+            font-size: 0.9rem;
+            margin: 0;
+        }
+
+        .free-notice a {
+            color: #667eea;
+            font-weight: 600;
+        }
+
         /* Options Section */
         .options {
             margin-top: 2rem;
@@ -337,6 +381,12 @@
             border-color: #667eea;
         }
 
+        .option-group select:disabled {
+            background: #f5f5f5;
+            cursor: not-allowed;
+            color: #999;
+        }
+
         .model-info {
             color: #667eea;
             font-weight: 500;
@@ -368,6 +418,22 @@
             background: #d4edda;
             color: #155724;
             border: 1px solid #c3e6cb;
+        }
+
+        .upgrade-prompt {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 0.75rem 1rem;
+            border-radius: 10px;
+            font-size: 0.85rem;
+            margin-top: 0.5rem;
+            text-align: center;
+        }
+
+        .upgrade-prompt a {
+            color: #ffd700;
+            font-weight: 600;
+            text-decoration: underline;
         }
 
         /* Result Section */
@@ -427,11 +493,18 @@
             display: inline-flex;
             align-items: center;
             gap: 10px;
+            text-decoration: none;
         }
 
         .download-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 15px 40px rgba(17, 153, 142, 0.5);
+        }
+
+        .download-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            box-shadow: none;
         }
 
         .new-image-btn {
@@ -543,6 +616,133 @@
             font-size: 0.95rem;
         }
 
+        /* Pricing Section */
+        .pricing {
+            padding: 6rem 2rem;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+
+        .pricing-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .pricing h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #1a1a1a;
+        }
+
+        .pricing > p {
+            text-align: center;
+            color: #666;
+            margin-bottom: 3rem;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .pricing-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2.5rem;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+        }
+
+        .pricing-card.featured {
+            border: 3px solid #667eea;
+            transform: scale(1.05);
+        }
+
+        .pricing-card.featured:hover {
+            transform: scale(1.05) translateY(-5px);
+        }
+
+        .pricing-badge {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .pricing-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .pricing-card .price {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #667eea;
+            margin: 1rem 0;
+        }
+
+        .pricing-card .price span {
+            font-size: 1rem;
+            color: #666;
+        }
+
+        .pricing-card p {
+            color: #666;
+            margin-bottom: 1.5rem;
+        }
+
+        .pricing-features {
+            list-style: none;
+            margin-bottom: 2rem;
+            text-align: left;
+        }
+
+        .pricing-features li {
+            padding: 0.5rem 0;
+            color: #555;
+        }
+
+        .pricing-features li i {
+            color: #11998e;
+            margin-right: 0.5rem;
+        }
+
+        .pricing-btn {
+            display: block;
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+
+        .pricing-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+
         /* Footer */
         .footer {
             background: #1a1a2e;
@@ -583,6 +783,41 @@
             color: white;
         }
 
+        /* Alert Banner */
+        .alert-banner {
+            position: fixed;
+            top: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #ffebee;
+            border: 1px solid #ef9a9a;
+            color: #c62828;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+            z-index: 999;
+            display: none;
+            align-items: center;
+            gap: 1rem;
+            max-width: 90%;
+        }
+
+        .alert-banner.active {
+            display: flex;
+        }
+
+        .alert-banner.success {
+            background: #e8f5e9;
+            border-color: #a5d6a7;
+            color: #2e7d32;
+        }
+
+        .alert-banner.warning {
+            background: #fff3e0;
+            border-color: #ffcc80;
+            color: #e65100;
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
             .navbar {
@@ -617,10 +852,24 @@
                 width: 100%;
                 margin: 0.5rem 0;
             }
+
+            .pricing-card.featured {
+                transform: none;
+            }
+
+            .pricing-card.featured:hover {
+                transform: translateY(-5px);
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Alert Banner -->
+    <div class="alert-banner" id="alertBanner">
+        <i class="fas fa-exclamation-circle"></i>
+        <span id="alertMessage">Message</span>
+    </div>
+
     <!-- Navbar -->
     <nav class="navbar">
         <a href="#" class="logo">
@@ -633,8 +882,7 @@
             </div>
         </a>
         <div class="nav-links">
-            <a href="#how-it-works">How it Works</a>
-            <a href="#features">Features</a>
+            <a href="#pricing">Pricing</a>
             <a href="/api">API Docs</a>
             
             <!-- Login Button (shown when not logged in) -->
@@ -644,11 +892,12 @@
             <div class="user-profile" id="userProfile">
                 <img src="" alt="User" class="user-avatar-small" id="navUserAvatar">
                 <span class="user-name-nav" id="navUserName">User</span>
+                <span class="wallet-badge" id="navWalletBadge">0</span>
                 <i class="fas fa-chevron-down" style="font-size: 0.75rem; color: #888;"></i>
                 <div class="user-dropdown">
-                    <a href="/" style="font-weight: 600;"><i class="fas fa-home" style="margin-right: 8px;"></i>Dashboard</a>
-                    <a href="#"><i class="fas fa-history" style="margin-right: 8px;"></i>History</a>
-                    <a href="#"><i class="fas fa-cog" style="margin-right: 8px;"></i>Settings</a>
+                    <a href="/dashboard" style="font-weight: 600;"><i class="fas fa-wallet" style="margin-right: 8px;"></i>Dashboard</a>
+                    <a href="/dashboard"><i class="fas fa-history" style="margin-right: 8px;"></i>History</a>
+                    <a href="#" id="adminLink" style="display: none;"><i class="fas fa-shield-alt" style="margin-right: 8px;"></i>Admin Panel</a>
                     <hr>
                     <a href="/auth/logout" style="color: #dc3545;"><i class="fas fa-sign-out-alt" style="margin-right: 8px;"></i>Sign Out</a>
                 </div>
@@ -674,6 +923,15 @@
                     <p class="file-types">Supports: JPG, PNG, WEBP • Max 12MB</p>
                     <input type="file" id="fileInput" accept="image/*" hidden>
                 </div>
+
+                <!-- Free User Notice -->
+                <div class="free-notice" id="freeNotice">
+                    <i class="fas fa-info-circle"></i>
+                    <div>
+                        <h4>Free Version</h4>
+                        <p>Output limited to 480p. <a href="#pricing">Upgrade to HD</a> for high-resolution processing and access to all AI models.</p>
+                    </div>
+                </div>
             </div>
 
             <!-- Loading -->
@@ -697,7 +955,7 @@
                 </div>
                 <div class="download-section">
                     <a id="downloadLink" href="#" download class="download-btn">
-                        <i class="fas fa-download"></i> Download HD Image
+                        <i class="fas fa-download"></i> Download Image
                     </a>
                     <button class="new-image-btn" onclick="resetUpload()">Process New Image</button>
                 </div>
@@ -709,16 +967,12 @@
                     <div class="option-group">
                         <label for="model">AI Model <span id="modelInfo" class="model-info"></span></label>
                         <select id="model" onchange="updateModelInfo()">
-                            <option value="u2net" data-size="168MB" data-time="5s">⚡ General (U2Net) - Fast</option>
-                            <option value="u2netp" data-size="4MB" data-time="3s">🚀 Lightweight (U2Netp) - Super Fast</option>
-                            <option value="u2net_human_seg" data-size="168MB" data-time="5s">👤 Human Portrait - Recommended</option>
-                            <option value="u2net_cloth_seg" data-size="168MB" data-time="5s">👕 Clothing</option>
-                            <option value="isnet-anime" data-size="176MB" data-time="6s">🎨 Anime/Cartoon</option>
-                            <option value="bria-rmbg" data-size="160MB" data-time="5s">⭐ BRIA RMBG 2.0 - Best Quality</option>
-                            <option value="birefnet-general" data-size="824MB" data-time="2-3min">💎 Premium HD (BiRefNet) - Slow</option>
-                            <option value="birefnet-portrait" data-size="928MB" data-time="3-4min">🐢 Portrait HD - Very Slow</option>
+                            <!-- Models will be loaded dynamically -->
                         </select>
                         <small id="modelWarning" class="model-warning"></small>
+                        <div class="upgrade-prompt" id="upgradePrompt" style="display: none;">
+                            <i class="fas fa-lock"></i> Unlock all models with a <a href="#pricing">Premium Plan</a>
+                        </div>
                     </div>
                     <div class="option-group">
                         <label for="format">Output Format</label>
@@ -727,6 +981,53 @@
                             <option value="jpg">JPG (White BG)</option>
                         </select>
                     </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="pricing" id="pricing">
+        <div class="pricing-container">
+            <h2>Simple, Transparent Pricing</h2>
+            <p>Pay only for what you use. No subscriptions, no hidden fees.</p>
+            
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <h3>Basic</h3>
+                    <div class="price">₹20</div>
+                    <p>10 photo credits</p>
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> HD Processing</li>
+                        <li><i class="fas fa-check"></i> All AI Models</li>
+                        <li><i class="fas fa-check"></i> No Watermark</li>
+                    </ul>
+                    <a href="/dashboard" class="pricing-btn">Get Started</a>
+                </div>
+                <div class="pricing-card featured">
+                    <div class="pricing-badge">BEST VALUE</div>
+                    <h3>Standard</h3>
+                    <div class="price">₹50</div>
+                    <p>30 photo credits</p>
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> HD Processing</li>
+                        <li><i class="fas fa-check"></i> All AI Models</li>
+                        <li><i class="fas fa-check"></i> No Watermark</li>
+                        <li><i class="fas fa-check"></i> Save ₹10</li>
+                    </ul>
+                    <a href="/dashboard" class="pricing-btn">Get Started</a>
+                </div>
+                <div class="pricing-card">
+                    <h3>Premium</h3>
+                    <div class="price">₹100</div>
+                    <p>70 photo credits</p>
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> HD Processing</li>
+                        <li><i class="fas fa-check"></i> All AI Models</li>
+                        <li><i class="fas fa-check"></i> No Watermark</li>
+                        <li><i class="fas fa-check"></i> Save ₹40</li>
+                    </ul>
+                    <a href="/dashboard" class="pricing-btn">Get Started</a>
                 </div>
             </div>
         </div>
@@ -760,10 +1061,10 @@
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">
-                        <i class="fas fa-infinity"></i>
+                        <i class="fas fa-coins"></i>
                     </div>
-                    <h3>Unlimited Free</h3>
-                    <p>No registration required. Remove backgrounds as many times as you want.</p>
+                    <h3>Pay Per Use</h3>
+                    <p>No monthly subscriptions. Buy credits and use them whenever you want.</p>
                 </div>
             </div>
         </div>
@@ -798,21 +1099,96 @@
         const userProfile = document.getElementById('userProfile');
         const navUserAvatar = document.getElementById('navUserAvatar');
         const navUserName = document.getElementById('navUserName');
+        const navWalletBadge = document.getElementById('navWalletBadge');
+        const freeNotice = document.getElementById('freeNotice');
+        const upgradePrompt = document.getElementById('upgradePrompt');
+        const adminLink = document.getElementById('adminLink');
 
-        // Check for logged in user (from server injection or localStorage)
-        if (typeof window.currentUser !== 'undefined' && window.currentUser) {
-            showLoggedInUser(window.currentUser);
-            localStorage.setItem('user', JSON.stringify(window.currentUser));
-        } else {
-            // Check localStorage for Google One Tap login
-            const userStr = localStorage.getItem('user');
-            if (userStr) {
-                try {
-                    const user = JSON.parse(userStr);
-                    showLoggedInUser(user);
-                } catch (e) {
-                    console.log('No user logged in');
+        // User context from backend
+        let userContext = {
+            is_authenticated: false,
+            has_active_plan: false,
+            wallet_balance: 0,
+            can_use_hd: false,
+            can_use_advanced_models: false,
+            max_resolution: 480,
+            should_add_watermark: true
+        };
+
+        let availableModels = [];
+
+        // Initialize
+        async function init() {
+            // Load user context
+            await loadUserContext();
+            
+            // Load available models
+            await loadModels();
+            
+            // Check for logged in user (from server injection or localStorage)
+            if (typeof window.currentUser !== 'undefined' && window.currentUser) {
+                showLoggedInUser(window.currentUser);
+                localStorage.setItem('user', JSON.stringify(window.currentUser));
+            } else {
+                const userStr = localStorage.getItem('user');
+                if (userStr) {
+                    try {
+                        const user = JSON.parse(userStr);
+                        showLoggedInUser(user);
+                    } catch (e) {
+                        console.log('No user logged in');
+                    }
                 }
+            }
+        }
+
+        async function loadUserContext() {
+            try {
+                const res = await fetch('/api/user/context');
+                if (res.ok) {
+                    userContext = await res.json();
+                    updateUIForUserContext();
+                }
+            } catch (error) {
+                console.log('User not logged in or error loading context');
+            }
+        }
+
+        function updateUIForUserContext() {
+            // Show/hide free notice
+            freeNotice.style.display = userContext.can_use_hd ? 'none' : 'flex';
+            
+            // Show/hide upgrade prompt
+            upgradePrompt.style.display = userContext.can_use_advanced_models ? 'none' : 'block';
+            
+            // Update wallet badge
+            if (userContext.is_authenticated) {
+                navWalletBadge.textContent = userContext.wallet_balance;
+                navWalletBadge.style.display = userContext.wallet_balance > 0 ? 'inline-block' : 'none';
+            }
+        }
+
+        async function loadModels() {
+            try {
+                const res = await fetch('/api/models');
+                const data = await res.json();
+                availableModels = data.models;
+                
+                // Populate model select
+                modelSelect.innerHTML = availableModels.map(m => 
+                    `<option value="${m.model_name}">${m.display_name}</option>`
+                ).join('');
+                
+                updateModelInfo();
+            } catch (error) {
+                console.error('Error loading models:', error);
+                // Fallback models
+                modelSelect.innerHTML = `
+                    <option value="u2net">⚡ General (U2Net) - Fast</option>
+                    <option value="u2netp">🚀 Lightweight (U2Netp) - Super Fast</option>
+                    <option value="u2net_human_seg">👤 Human Portrait - Recommended</option>
+                    <option value="silueta">📦 Silueta - Lightweight</option>
+                `;
             }
         }
 
@@ -826,32 +1202,49 @@
                 const name = user.name || user.email || 'U';
                 navUserAvatar.src = 'https://ui-avatars.com/api/?name=' + encodeURIComponent(name) + '&background=667eea&color=fff&size=100';
             }
+            
+            // Show admin link if admin
+            if (user.role === 'admin') {
+                adminLink.style.display = 'block';
+            }
         }
-
-        // Initialize model info
-        updateModelInfo();
 
         function updateModelInfo() {
             const selected = modelSelect.options[modelSelect.selectedIndex];
-            const size = selected.dataset.size;
-            const time = selected.dataset.time;
             const value = selected.value;
+            
+            // Find model info
+            const model = availableModels.find(m => m.model_name === value);
             
             modelWarning.className = 'model-warning';
             
-            if (value.includes('birefnet')) {
-                modelWarning.classList.add('danger');
-                modelWarning.innerHTML = `⚠️ <strong>Large Model (${size})</strong><br>First use: ${time} load time. Heavy RAM usage.`;
-            } else if (value === 'bria-rmbg') {
-                modelWarning.classList.add('success');
-                modelWarning.innerHTML = `✅ <strong>Best Balance</strong> (${size}) - ~${time}`;
-            } else if (value === 'u2netp') {
-                modelWarning.classList.add('success');
-                modelWarning.innerHTML = `⚡ <strong>Fastest</strong> (${size}) - ~${time}`;
+            if (model) {
+                if (!model.is_basic && !userContext.can_use_advanced_models) {
+                    modelWarning.classList.add('warning');
+                    modelWarning.innerHTML = `<i class="fas fa-lock"></i> This is an advanced model. <a href="#pricing" style="color: inherit; text-decoration: underline;">Upgrade</a> to use it.`;
+                    modelSelect.dataset.locked = 'true';
+                } else {
+                    modelWarning.classList.add('success');
+                    modelWarning.innerHTML = `<i class="fas fa-check"></i> ${model.is_basic ? 'Free model' : 'Premium model - Available'}`;
+                    modelSelect.dataset.locked = 'false';
+                }
             } else {
                 modelWarning.classList.add('success');
-                modelWarning.innerHTML = `✅ Recommended (${size}) - ~${time}`;
+                modelWarning.innerHTML = '✅ Available';
+                modelSelect.dataset.locked = 'false';
             }
+        }
+
+        function showAlert(message, type = 'error') {
+            const banner = document.getElementById('alertBanner');
+            const msg = document.getElementById('alertMessage');
+            
+            banner.className = 'alert-banner active ' + (type === 'success' ? 'success' : type === 'warning' ? 'warning' : '');
+            msg.textContent = message;
+            
+            setTimeout(() => {
+                banner.classList.remove('active');
+            }, 5000);
         }
 
         // Drag and drop events
@@ -877,15 +1270,26 @@
             if (e.target.files.length) handleFile(e.target.files[0]);
         });
 
-        function handleFile(file) {
+        async function handleFile(file) {
             if (!file.type.startsWith('image/')) {
-                alert('Please upload an image file');
+                showAlert('Please upload an image file');
                 return;
             }
 
             if (file.size > 12 * 1024 * 1024) {
-                alert('File size should be less than 12MB');
+                showAlert('File size should be less than 12MB');
                 return;
+            }
+
+            // Check if model is locked
+            if (modelSelect.dataset.locked === 'true') {
+                showAlert('Please upgrade to use this model');
+                return;
+            }
+
+            // Check if user has credits for HD
+            if (!userContext.can_use_hd) {
+                // Will be processed in 480p - continue
             }
 
             // Show original image
@@ -895,7 +1299,7 @@
             };
             reader.readAsDataURL(file);
 
-            // Show loading with model-specific message
+            // Show loading
             uploadSection.style.display = 'none';
             loadingSection.classList.add('active');
             
@@ -905,17 +1309,17 @@
                 loadingSubtext.textContent = 'Large model (900MB+) loading into memory. This may take 2-4 minutes on first use. Please wait...';
             } else {
                 loadingText.textContent = 'Removing background with AI magic...';
-                loadingSubtext.textContent = 'Processing your image...';
+                loadingSubtext.textContent = userContext.can_use_hd ? 'Processing in HD...' : 'Processing in 480p (Upgrade for HD)';
             }
 
             // Process image
-            processImage(file);
+            await processImage(file);
         }
 
         async function processImage(file) {
             const formData = new FormData();
             formData.append('file', file);
-            formData.append('model', document.getElementById('model').value);
+            formData.append('model', modelSelect.value);
 
             try {
                 const response = await fetch('/api/remove', {
@@ -923,7 +1327,10 @@
                     body: formData
                 });
 
-                if (!response.ok) throw new Error('Processing failed');
+                if (!response.ok) {
+                    const error = await response.json();
+                    throw new Error(error.error || 'Processing failed');
+                }
 
                 const blob = await response.blob();
                 const url = URL.createObjectURL(blob);
@@ -934,8 +1341,14 @@
                 resultImage.src = url;
                 downloadLink.href = url;
                 downloadLink.download = 'khan-jan-result.png';
+                
+                // Update wallet badge if logged in
+                if (userContext.is_authenticated) {
+                    await loadUserContext();
+                }
+                
             } catch (error) {
-                alert('Error processing image: ' + error.message);
+                showAlert(error.message);
                 resetUpload();
             }
         }
@@ -948,6 +1361,9 @@
             loadingText.textContent = 'Removing background with AI magic...';
             loadingSubtext.textContent = '';
         }
+
+        // Initialize on page load
+        init();
     </script>
 </body>
 </html>

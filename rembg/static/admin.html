@@ -1,0 +1,1042 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Khan Jan Seva Kendra</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #f5f7fa;
+            color: #1a1a1a;
+            line-height: 1.6;
+        }
+
+        /* Navbar */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background: #1a1a2e;
+            color: white;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 18px;
+        }
+
+        .logo-text {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: white;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #aaa;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: white;
+        }
+
+        .admin-badge {
+            background: #667eea;
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        /* Main Container */
+        .main-container {
+            padding: 100px 2rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Page Header */
+        .page-header {
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .page-header h1 {
+            font-size: 2rem;
+            color: #1a1a1a;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 16px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+        }
+
+        .stat-icon.blue { background: #e3f2fd; color: #1976d2; }
+        .stat-icon.green { background: #e8f5e9; color: #388e3c; }
+        .stat-icon.orange { background: #fff3e0; color: #f57c00; }
+        .stat-icon.purple { background: #f3e5f5; color: #7b1fa2; }
+        .stat-icon.red { background: #ffebee; color: #d32f2f; }
+
+        .stat-info h3 {
+            font-size: 1.5rem;
+            color: #1a1a1a;
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-info p {
+            color: #888;
+            font-size: 0.85rem;
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid #e0e0e0;
+            padding-bottom: 0.5rem;
+        }
+
+        .tab {
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+            color: #666;
+        }
+
+        .tab:hover {
+            background: #f0f0f0;
+        }
+
+        .tab.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        /* Tab Content */
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Card */
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            margin-bottom: 1.5rem;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #1a1a1a;
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: #f5f7fa;
+            color: #666;
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            color: white;
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #eb3349 0%, #f45c43 100%);
+            color: white;
+        }
+
+        .btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        /* Table Styles */
+        .table-container {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 0.875rem 1rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        th {
+            font-weight: 600;
+            color: #666;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            background: #f8f9fa;
+        }
+
+        td {
+            color: #444;
+            font-size: 0.9rem;
+        }
+
+        tr:hover {
+            background: #f8f9fa;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .status-badge.success {
+            background: #e8f5e9;
+            color: #388e3c;
+        }
+
+        .status-badge.warning {
+            background: #fff3e0;
+            color: #f57c00;
+        }
+
+        .status-badge.danger {
+            background: #ffebee;
+            color: #d32f2f;
+        }
+
+        .status-badge.info {
+            background: #e3f2fd;
+            color: #1976d2;
+        }
+
+        .action-btns {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .action-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .action-btn.edit {
+            background: #e3f2fd;
+            color: #1976d2;
+        }
+
+        .action-btn.toggle {
+            background: #f3e5f5;
+            color: #7b1fa2;
+        }
+
+        .action-btn.add {
+            background: #e8f5e9;
+            color: #388e3c;
+        }
+
+        .action-btn:hover {
+            transform: scale(1.1);
+        }
+
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: #444;
+            font-size: 0.9rem;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            max-width: 500px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-header h3 {
+            font-size: 1.25rem;
+        }
+
+        .modal-footer {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .modal-footer .btn {
+            flex: 1;
+        }
+
+        /* Search Bar */
+        .search-bar {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 0.75rem 1rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 0.95rem;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: #888;
+        }
+
+        .empty-state i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+
+        /* Loading */
+        .loading {
+            text-align: center;
+            padding: 3rem;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid #f0f0f0;
+            border-top-color: #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 1rem;
+            }
+            
+            .main-container {
+                padding: 90px 1rem 1rem;
+            }
+            
+            .tabs {
+                flex-wrap: wrap;
+            }
+            
+            .page-header {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <a href="/" class="logo">
+            <div class="logo-icon">
+                <i class="fas fa-magic"></i>
+            </div>
+            <div class="logo-text">Admin Panel</div>
+        </a>
+        <div class="nav-links">
+            <span class="admin-badge">ADMIN</span>
+            <a href="/">Home</a>
+            <a href="/dashboard">Dashboard</a>
+            <a href="/auth/logout">Logout</a>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <div class="page-header">
+            <div>
+                <h1><i class="fas fa-shield-alt"></i> Admin Dashboard</h1>
+                <p style="color: #666;">Manage users, wallets, and system settings</p>
+            </div>
+        </div>
+
+        <!-- Stats Grid -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon blue">
+                    <i class="fas fa-users"></i>
+                </div>
+                <div class="stat-info">
+                    <h3 id="totalUsers">-</h3>
+                    <p>Total Users</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon green">
+                    <i class="fas fa-exchange-alt"></i>
+                </div>
+                <div class="stat-info">
+                    <h3 id="totalTransactions">-</h3>
+                    <p>Transactions</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon purple">
+                    <i class="fas fa-image"></i>
+                </div>
+                <div class="stat-info">
+                    <h3 id="totalPhotos">-</h3>
+                    <p>Photos Processed</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon orange">
+                    <i class="fas fa-coins"></i>
+                </div>
+                <div class="stat-info">
+                    <h3 id="totalCredits">-</h3>
+                    <p>Total Credits</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tabs -->
+        <div class="tabs">
+            <div class="tab active" onclick="switchTab('users')">Users</div>
+            <div class="tab" onclick="switchTab('transactions')">Transactions</div>
+            <div class="tab" onclick="switchTab('models')">AI Models</div>
+            <div class="tab" onclick="switchTab('plans')">Pricing Plans</div>
+        </div>
+
+        <!-- Users Tab -->
+        <div class="tab-content active" id="usersTab">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title"><i class="fas fa-users"></i> All Users</h3>
+                    <div class="search-bar" style="margin: 0;">
+                        <input type="text" class="search-input" placeholder="Search users..." id="userSearch">
+                        <button class="btn btn-primary" onclick="loadUsers()">Search</button>
+                    </div>
+                </div>
+                <div class="table-container">
+                    <table id="usersTable">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Email</th>
+                                <th>Name</th>
+                                <th>Plan</th>
+                                <th>Credits</th>
+                                <th>Status</th>
+                                <th>Joined</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td colspan="8" class="loading"><div class="spinner"></div></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Transactions Tab -->
+        <div class="tab-content" id="transactionsTab">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title"><i class="fas fa-exchange-alt"></i> All Transactions</h3>
+                </div>
+                <div class="table-container">
+                    <table id="transactionsTable">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>User</th>
+                                <th>Type</th>
+                                <th>Amount</th>
+                                <th>Status</th>
+                                <th>Description</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td colspan="7" class="loading"><div class="spinner"></div></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Models Tab -->
+        <div class="tab-content" id="modelsTab">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title"><i class="fas fa-robot"></i> AI Models Configuration</h3>
+                    <p style="color: #666; font-size: 0.9rem;">Enable/disable models and set access levels</p>
+                </div>
+                <div class="table-container">
+                    <table id="modelsTable">
+                        <thead>
+                            <tr>
+                                <th>Model</th>
+                                <th>Display Name</th>
+                                <th>Type</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td colspan="5" class="loading"><div class="spinner"></div></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Plans Tab -->
+        <div class="tab-content" id="plansTab">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title"><i class="fas fa-tags"></i> Pricing Plans</h3>
+                </div>
+                <div class="table-container">
+                    <table id="plansTable">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Price (₹)</th>
+                                <th>Credits</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td colspan="5" class="loading"><div class="spinner"></div></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Credits Modal -->
+    <div class="modal" id="addCreditsModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-plus-circle"></i> Add Credits</h3>
+                <p style="color: #666;">Add credits to user wallet</p>
+            </div>
+            <div class="form-group">
+                <label>User ID</label>
+                <input type="text" class="form-control" id="creditUserId" readonly>
+            </div>
+            <div class="form-group">
+                <label>Amount</label>
+                <input type="number" class="form-control" id="creditAmount" placeholder="Enter credits amount" min="1">
+            </div>
+            <div class="form-group">
+                <label>Description</label>
+                <input type="text" class="form-control" id="creditDescription" placeholder="e.g., Manual credit addition">
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal('addCreditsModal')">Cancel</button>
+                <button class="btn btn-success" onclick="submitAddCredits()">Add Credits</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Plan Modal -->
+    <div class="modal" id="editPlanModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-edit"></i> Edit Plan</h3>
+            </div>
+            <div class="form-group">
+                <label>Plan Name</label>
+                <input type="text" class="form-control" id="editPlanName" readonly>
+            </div>
+            <div class="form-group">
+                <label>Price (₹)</label>
+                <input type="number" class="form-control" id="editPlanPrice" min="1">
+            </div>
+            <div class="form-group">
+                <label>Credits</label>
+                <input type="number" class="form-control" id="editPlanCredits" min="1">
+            </div>
+            <div class="form-group">
+                <label>Status</label>
+                <select class="form-control" id="editPlanStatus">
+                    <option value="true">Active</option>
+                    <option value="false">Inactive</option>
+                </select>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal('editPlanModal')">Cancel</button>
+                <button class="btn btn-primary" onclick="submitEditPlan()">Save Changes</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentTab = 'users';
+        let editingPlan = null;
+
+        // Check admin access
+        async function checkAdmin() {
+            try {
+                const res = await fetch('/api/user/profile');
+                if (!res.ok) throw new Error('Not authenticated');
+                
+                const data = await res.json();
+                if (data.user.role !== 'admin') {
+                    alert('Admin access required');
+                    window.location.href = '/';
+                    return false;
+                }
+                return true;
+            } catch (error) {
+                window.location.href = '/login';
+                return false;
+            }
+        }
+
+        // Load admin stats
+        async function loadStats() {
+            try {
+                const res = await fetch('/api/admin/stats');
+                const data = await res.json();
+                
+                document.getElementById('totalUsers').textContent = data.stats.total_users || 0;
+                document.getElementById('totalTransactions').textContent = data.stats.total_transactions || 0;
+                document.getElementById('totalPhotos').textContent = data.stats.total_photos_processed || 0;
+                document.getElementById('totalCredits').textContent = data.stats.total_credits_in_system || 0;
+            } catch (error) {
+                console.error('Error loading stats:', error);
+            }
+        }
+
+        // Tab switching
+        function switchTab(tab) {
+            currentTab = tab;
+            
+            // Update tabs
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Update content
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            document.getElementById(tab + 'Tab').classList.add('active');
+            
+            // Load data
+            if (tab === 'users') loadUsers();
+            if (tab === 'transactions') loadTransactions();
+            if (tab === 'models') loadModels();
+            if (tab === 'plans') loadPlans();
+        }
+
+        // Load users
+        async function loadUsers() {
+            try {
+                const res = await fetch('/api/admin/users?limit=100');
+                const data = await res.json();
+                
+                const tbody = document.querySelector('#usersTable tbody');
+                
+                if (data.users.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="8" class="empty-state"><i class="fas fa-users"></i><p>No users found</p></td></tr>`;
+                    return;
+                }
+                
+                tbody.innerHTML = data.users.map(u => `
+                    <tr>
+                        <td>${u.id}</td>
+                        <td>${u.email}</td>
+                        <td>${u.name || '-'}</td>
+                        <td><span class="status-badge ${u.plan_type === 'free' ? 'warning' : 'success'}">${u.plan_type}</span></td>
+                        <td>${u.wallet_balance || 0}</td>
+                        <td><span class="status-badge ${u.is_active ? 'success' : 'danger'}">${u.is_active ? 'Active' : 'Disabled'}</span></td>
+                        <td>${formatDate(u.created_at)}</td>
+                        <td>
+                            <div class="action-btns">
+                                <button class="action-btn add" onclick="openAddCreditsModal(${u.id})" title="Add Credits">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                `).join('');
+            } catch (error) {
+                console.error('Error loading users:', error);
+            }
+        }
+
+        // Load transactions
+        async function loadTransactions() {
+            try {
+                const res = await fetch('/api/admin/transactions?limit=100');
+                const data = await res.json();
+                
+                const tbody = document.querySelector('#transactionsTable tbody');
+                
+                if (data.transactions.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="7" class="empty-state"><i class="fas fa-exchange-alt"></i><p>No transactions found</p></td></tr>`;
+                    return;
+                }
+                
+                tbody.innerHTML = data.transactions.map(t => `
+                    <tr>
+                        <td>${t.id}</td>
+                        <td>User #${t.user_id}</td>
+                        <td><span class="status-badge ${t.transaction_type === 'credit' ? 'success' : 'warning'}">${t.transaction_type}</span></td>
+                        <td style="color: ${t.amount > 0 ? '#11998e' : '#f57c00'}; font-weight: 600;">${t.amount > 0 ? '+' : ''}${t.amount}</td>
+                        <td><span class="status-badge ${t.status === 'completed' ? 'success' : t.status === 'pending' ? 'warning' : 'danger'}">${t.status}</span></td>
+                        <td>${t.description || '-'}</td>
+                        <td>${formatDate(t.created_at)}</td>
+                    </tr>
+                `).join('');
+            } catch (error) {
+                console.error('Error loading transactions:', error);
+            }
+        }
+
+        // Load models
+        async function loadModels() {
+            try {
+                const res = await fetch('/api/models');
+                const data = await res.json();
+                
+                const tbody = document.querySelector('#modelsTable tbody');
+                
+                tbody.innerHTML = data.models.map(m => `
+                    <tr>
+                        <td><code>${m.model_name}</code></td>
+                        <td>${m.display_name}</td>
+                        <td><span class="status-badge ${m.is_basic ? 'info' : 'success'}">${m.is_basic ? 'Basic (Free)' : 'Advanced (Paid)'}</span></td>
+                        <td><span class="status-badge ${m.is_active ? 'success' : 'danger'}">${m.is_active ? 'Enabled' : 'Disabled'}</span></td>
+                        <td>
+                            <div class="action-btns">
+                                <button class="action-btn toggle" onclick="toggleModel('${m.model_name}', ${!m.is_active})" title="${m.is_active ? 'Disable' : 'Enable'}">
+                                    <i class="fas ${m.is_active ? 'fa-ban' : 'fa-check'}"></i>
+                                </button>
+                                <button class="action-btn edit" onclick="setModelBasic('${m.model_name}', ${!m.is_basic})" title="Set as ${m.is_basic ? 'Advanced' : 'Basic'}">
+                                    <i class="fas fa-layer-group"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                `).join('');
+            } catch (error) {
+                console.error('Error loading models:', error);
+            }
+        }
+
+        // Load plans
+        async function loadPlans() {
+            try {
+                const res = await fetch('/api/plans');
+                const data = await res.json();
+                
+                const tbody = document.querySelector('#plansTable tbody');
+                
+                tbody.innerHTML = data.plans.map(p => `
+                    <tr>
+                        <td><strong>${p.display_name}</strong></td>
+                        <td>₹${p.price_inr}</td>
+                        <td>${p.credits} credits</td>
+                        <td><span class="status-badge ${p.is_active ? 'success' : 'danger'}">${p.is_active ? 'Active' : 'Inactive'}</span></td>
+                        <td>
+                            <div class="action-btns">
+                                <button class="action-btn edit" onclick="openEditPlanModal('${p.name}', ${p.price_inr}, ${p.credits}, ${p.is_active})" title="Edit">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                `).join('');
+            } catch (error) {
+                console.error('Error loading plans:', error);
+            }
+        }
+
+        // Toggle model
+        async function toggleModel(modelName, isActive) {
+            try {
+                const res = await fetch(`/api/admin/models/${modelName}/toggle?is_active=${isActive}`, {
+                    method: 'POST'
+                });
+                
+                if (res.ok) {
+                    loadModels();
+                } else {
+                    alert('Failed to update model');
+                }
+            } catch (error) {
+                console.error('Error toggling model:', error);
+            }
+        }
+
+        // Set model basic/advanced
+        async function setModelBasic(modelName, isBasic) {
+            try {
+                const res = await fetch(`/api/admin/models/${modelName}/set-basic?is_basic=${isBasic}`, {
+                    method: 'POST'
+                });
+                
+                if (res.ok) {
+                    loadModels();
+                } else {
+                    alert('Failed to update model');
+                }
+            } catch (error) {
+                console.error('Error setting model basic:', error);
+            }
+        }
+
+        // Modal functions
+        function openAddCreditsModal(userId) {
+            document.getElementById('creditUserId').value = userId;
+            document.getElementById('addCreditsModal').classList.add('active');
+        }
+
+        function openEditPlanModal(name, price, credits, isActive) {
+            editingPlan = name;
+            document.getElementById('editPlanName').value = name;
+            document.getElementById('editPlanPrice').value = price;
+            document.getElementById('editPlanCredits').value = credits;
+            document.getElementById('editPlanStatus').value = isActive.toString();
+            document.getElementById('editPlanModal').classList.add('active');
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+        }
+
+        async function submitAddCredits() {
+            const userId = document.getElementById('creditUserId').value;
+            const amount = parseInt(document.getElementById('creditAmount').value);
+            const description = document.getElementById('creditDescription').value;
+            
+            if (!amount || amount < 1) {
+                alert('Please enter a valid amount');
+                return;
+            }
+            
+            try {
+                const res = await fetch(`/api/admin/users/${userId}/add-credits?amount=${amount}&description=${encodeURIComponent(description)}`, {
+                    method: 'POST'
+                });
+                
+                if (res.ok) {
+                    closeModal('addCreditsModal');
+                    loadUsers();
+                    loadStats();
+                    alert('Credits added successfully!');
+                } else {
+                    alert('Failed to add credits');
+                }
+            } catch (error) {
+                console.error('Error adding credits:', error);
+            }
+        }
+
+        async function submitEditPlan() {
+            const price = parseInt(document.getElementById('editPlanPrice').value);
+            const credits = parseInt(document.getElementById('editPlanCredits').value);
+            const isActive = document.getElementById('editPlanStatus').value === 'true';
+            
+            try {
+                const res = await fetch(`/api/admin/plans/${editingPlan}?price_inr=${price}&credits=${credits}&is_active=${isActive}`, {
+                    method: 'PUT'
+                });
+                
+                if (res.ok) {
+                    closeModal('editPlanModal');
+                    loadPlans();
+                    alert('Plan updated successfully!');
+                } else {
+                    alert('Failed to update plan');
+                }
+            } catch (error) {
+                console.error('Error updating plan:', error);
+            }
+        }
+
+        function formatDate(dateStr) {
+            const date = new Date(dateStr);
+            return date.toLocaleDateString('en-IN', { 
+                day: 'numeric', 
+                month: 'short', 
+                year: 'numeric'
+            });
+        }
+
+        // Initialize
+        async function init() {
+            const isAdmin = await checkAdmin();
+            if (!isAdmin) return;
+            
+            loadStats();
+            loadUsers();
+        }
+
+        init();
+    </script>
+</body>
+</html>

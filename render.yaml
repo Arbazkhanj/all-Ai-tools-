@@ -1,16 +1,31 @@
 services:
   - type: web
-    name: khan-jan-seva-kendra
+    name: khanjanseva
     runtime: python
     plan: standard
     buildCommand: pip install -r requirements.txt
-    startCommand: rembg s --host 0.0.0.0 --port $PORT --log_level info
+    startCommand: python -m rembg s --host 0.0.0.0 --port $PORT
     envVars:
       - key: PYTHON_VERSION
         value: 3.11.0
-      - key: GOOGLE_CLIENT_ID
-        sync: false
       - key: GOOGLE_CLIENT_SECRET
         sync: false
-    healthCheckPath: /api
+      - key: SESSION_SECRET_KEY
+        generateValue: true
+      - key: DATABASE_URL
+        fromDatabase:
+          name: rembg-db
+          property: connectionString
+      - key: INSTAMOJO_API_KEY
+        sync: false
+      - key: INSTAMOJO_AUTH_TOKEN
+        sync: false
+      - key: INSTAMOJO_SALT
+        sync: false
+    healthCheckPath: /health
     autoDeploy: true
+
+databases:
+  - name: rembg-db
+    plan: free
+    ipAllowList: []

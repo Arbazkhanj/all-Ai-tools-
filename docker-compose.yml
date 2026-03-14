@@ -1,15 +1,32 @@
----
-# You can set variables in .env file in root folder
-#
-# PUBLIC_PORT=7000:7000
-# REPLICAS_COUNT=1
+version: '3.8'
 
 services:
-  app:
+  rembg:
     build: .
-    command: ["s"]
-    deploy:
-      replicas: ${REPLICAS_COUNT:-1}
     ports:
-      - ${PUBLIC_PORT:-7000:7000}
-version: '3'
+      - "8000:8000"
+    environment:
+      - GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET}
+      - SESSION_SECRET_KEY=${SESSION_SECRET_KEY}
+      - DATABASE_URL=sqlite:///./data/rembg_payments.db
+      - INSTAMOJO_API_KEY=${INSTAMOJO_API_KEY}
+      - INSTAMOJO_AUTH_TOKEN=${INSTAMOJO_AUTH_TOKEN}
+      - INSTAMOJO_SALT=${INSTAMOJO_SALT}
+    volumes:
+      - ./data:/app/data
+    restart: unless-stopped
+    command: python -m rembg s --host 0.0.0.0 --port 8000
+
+  # Optional: Add PostgreSQL for production
+  # db:
+  #   image: postgres:15-alpine
+  #   environment:
+  #     - POSTGRES_USER=rembg
+  #     - POSTGRES_PASSWORD=${DB_PASSWORD}
+  #     - POSTGRES_DB=rembg
+  #   volumes:
+  #     - postgres_data:/var/lib/postgresql/data
+  #   restart: unless-stopped
+
+# volumes:
+#   postgres_data:

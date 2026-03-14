@@ -81,7 +81,7 @@ pytest = "^9.0.2"
 cpu = ["onnxruntime"]
 gpu = ["onnxruntime-gpu"]
 rocm = ["onnxruntime-rocm"]
-cli = ["aiohttp", "asyncer", "click", "fastapi", "filetype", "gradio", "python-multipart", "sniffio", "uvicorn", "watchdog", "python-jose", "authlib", "itsdangerous"]
+cli = ["aiohttp", "asyncer", "click", "fastapi", "filetype", "gradio", "python-multipart", "sniffio", "uvicorn", "watchdog", "python-jose", "authlib", "itsdangerous", "sqlalchemy>=2.0.0"]
 dev = ["bandit", "black", "flake8", "imagehash", "isort", "mypy", "pytest"]
 
 [tool.poetry.scripts]

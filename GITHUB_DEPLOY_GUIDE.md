@@ -1,401 +1,322 @@
-# GitHub Upload & Live Deployment Guide
-## Khan Jan Seva Kendra - Background Remover
+# Complete GitHub & Deployment Guide
+
+Ye guide GitHub pe push karne aur live deploy karne ke liye hai.
 
 ---
 
-## 📁 Step 1: GitHub Pe Upload Karna
+## Step 1: GitHub Repository Create Karo
 
-### 1.1 Git Repository Initialize Karo
+### 1.1 GitHub Pe Jao
+- https://github.com/new pe jao
+- Repository name: `khanjanseva` (ya jo bhi naam pasand ho)
+- Public ya Private select karo
+- **Create repository** click karo
+
+### 1.2 Repository URL Copy Karo
+URL hoga kuch aisa:
+```
+https://github.com/yourusername/khanjanseva.git
+```
+
+---
+
+## Step 2: Code Push Karo (2 Methods)
+
+### Method A: Automated Script (Easy)
 
 ```bash
-# Project folder mein jao
+# Terminal mein project directory pe jao
 cd /Users/arbaz/Downloads/rembg-main
 
-# Git initialize karo
+# Push script run karo
+./github_push.sh
+```
+
+Ye script automatically:
+- Git init karega (agar nahi hai)
+- Sab files add karega
+- Commit karega
+- Remote add karega
+- GitHub pe push karega
+
+### Method B: Manual Commands
+
+```bash
+# Project directory pe jao
+cd /Users/arbaz/Downloads/rembg-main
+
+# Git initialize (agar nahi hai)
 git init
 
-# Sab files add karo (models chhod ke)
+# All files add karo
 git add .
 
 # Commit karo
-git commit -m "Initial commit - Khan Jan Seva Kendra"
-```
+git commit -m "Initial production deployment"
 
-### 1.2 GitHub Repository Banao
-
-1. [github.com](https://github.com) pe jao
-2. **New Repository** click karo
-3. Name: `khan-jan-seva-kendra`
-4. **Create Repository**
-5. Commands copy karo
-
-### 1.3 Push Karo GitHub Pe
-
-```bash
-# GitHub repository connect karo
-git remote add origin https://github.com/YOUR_USERNAME/khan-jan-seva-kendra.git
+# Remote add karo (apna username dalna)
+git remote add origin https://github.com/yourusername/khanjanseva.git
 
 # Push karo
-git branch -M main
 git push -u origin main
 ```
 
 ---
 
-## ⚠️ Important: Models Ke Liye (2GB+ Files)
-
-GitHub pe 100MB se bade files allowed nahi hain. Models alag se handle karo:
-
-### Option A: Git LFS (Large File Storage)
-
-```bash
-# Git LFS install karo
-git lfs install
-
-# Track large files
-git lfs track "*.onnx"
-
-# Add .gitattributes
-git add .gitattributes
-git commit -m "Track ONNX models with LFS"
-
-# Models add karo (time lagega)
-git add ~/.u2net/*.onnx
-git commit -m "Add all AI models"
-git push
-```
-
-### Option B: Models Ko Ignore Karo (Recommended)
-
-`.gitignore` file mein add karo:
-
-```gitignore
-# Models - Ye download ho jayenge
-*.onnx
-models/
-~/.u2net/
-
-# Python
-__pycache__/
-*.py[cod]
-*$py.class
-.env
-.venv
-venv/
-
-# IDE
-.vscode/
-.idea/
-```
-
-Phir deployment ke waqt models auto-download ho jayenge.
-
----
-
-## 🌐 Step 2: Live Deploy Karna
+## Step 3: Deployment Platform Choose Karo
 
 ### Option 1: Railway (Recommended - Free & Easy)
 
-#### 2.1.1 Railway Account Banao
-1. [railway.app](https://railway.app) pe jao
-2. GitHub se login karo
+**Benefits:**
+- Free tier available
+- Auto-deploy on GitHub push
+- PostgreSQL database included
+- No credit card required
 
-#### 2.1.2 Deploy Karo
+**Steps:**
 
-```bash
-# Railway CLI install
-npm install -g @railway/cli
+1. **Railway Account** banao: https://railway.app/
 
-# Login
-railway login
+2. **New Project** → **Deploy from GitHub repo**
 
-# Project link karo
-railway link
+3. **Repository select** karo (khanjanseva)
 
-# Deploy
-railway up
+4. **Variables** add karo:
+```
+GOOGLE_CLIENT_SECRET = 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
+SESSION_SECRET_KEY = (generate random string)
+INSTAMOJO_API_KEY = 01c6b914d4f8e224cb4b6bdceaeb5b77
+INSTAMOJO_AUTH_TOKEN = d8ea03ef36c426ab2c10891cabd03d8c
+INSTAMOJO_SALT = 4e57693050da4345984d7d1360149032
 ```
 
-Ya web se:
-1. **New Project** → **Deploy from GitHub repo**
-2. Apna repo select karo
-3. **Deploy** click karo
+5. **Deploy** ho jayega automatically!
 
-#### 2.1.3 Environment Variables Set Karo
-
-Railway dashboard mein:
-```
-GOOGLE_CLIENT_ID=your-client-id
-GOOGLE_CLIENT_SECRET=your-secret
-```
+**Live URL:** `https://khanjanseva-production.up.railway.app`
 
 ---
 
 ### Option 2: Render (Free)
 
-#### 2.2.1 [render.com](https://render.com) Pe Jao
+**Benefits:**
+- Completely free
+- PostgreSQL database
+- Custom domain support
 
-1. **New Web Service** click karo
-2. GitHub repo connect karo
-3. Settings:
-   - **Name**: khan-jan-seva
-   - **Runtime**: Python
-   - **Build Command**: `pip install -r requirements.txt`
-   - **Start Command**: `rembg s --host 0.0.0.0 --port $PORT`
+**Steps:**
 
-#### 2.2.2 Create `requirements.txt`
+1. **Render Account** banao: https://render.com/
 
-```txt
-# requirements.txt
-rembg[cpu,cli]
-python-jose
-authlib
-itsdangerous
-google-auth
-```
+2. **New** → **Blueprint**
 
-#### 2.2.3 Create `render.yaml`
+3. **Connect GitHub**
 
-```yaml
-services:
-  - type: web
-    name: khan-jan-seva
-    runtime: python
-    buildCommand: pip install -r requirements.txt
-    startCommand: rembg s --host 0.0.0.0 --port $PORT
-    envVars:
-      - key: GOOGLE_CLIENT_ID
-        sync: false
-      - key: GOOGLE_CLIENT_SECRET
-        sync: false
-```
+4. Repository select karo
+
+5. **Environment Variables** add karo (same as Railway)
+
+6. **Deploy**
+
+**Live URL:** `https://khanjanseva.onrender.com`
 
 ---
 
-### Option 3: Heroku
+### Option 3: Heroku (Paid)
+
+**Note:** Heroku ka free tier band ho gaya hai, paid plan lena padega.
 
 ```bash
-# Heroku CLI install karo (agar nahi hai)
+# Heroku CLI se
+heroku create khanjanseva
 
-# Login
-heroku login
+# Environment variables
+heroku config:set GOOGLE_CLIENT_SECRET='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'
+heroku config:set SESSION_SECRET_KEY='your-secret'
 
-# App create karo
-heroku create khan-jan-seva-kendra
-
-# Git push se deploy
-heroku git:remote -a khan-jan-seva-kendra
+# Deploy
 git push heroku main
-
-# Logs check karo
-heroku logs --tail
-```
-
-**Create `Procfile`:**
-```
-web: rembg s --host 0.0.0.0 --port $PORT
-```
-
-**Create `runtime.txt`:**
-```
-python-3.11.0
 ```
 
 ---
 
-### Option 4: Docker (Best for Models)
+## Step 4: Environment Variables Setup
 
-#### 2.4.1 Create `Dockerfile`
+### Required Variables:
 
-```dockerfile
-FROM python:3.11-slim
+| Variable | Value | Description |
+|----------|-------|-------------|
+| `GOOGLE_CLIENT_SECRET` | `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` | Google OAuth |
+| `SESSION_SECRET_KEY` | Generate random 32+ chars | Session security |
+| `INSTAMOJO_API_KEY` | `01c6b914d4f8e224cb4b6bdceaeb5b77` | Payment gateway |
+| `INSTAMOJO_AUTH_TOKEN` | `d8ea03ef36c426ab2c10891cabd03d8c` | Payment auth |
+| `INSTAMOJO_SALT` | `4e57693050da4345984d7d1360149032` | Webhook verification |
 
-WORKDIR /app
-
-# Install dependencies
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
-
-# Copy code
-COPY . .
-
-# Create models directory
-RUN mkdir -p /root/.u2net
-
-# Download script
-COPY download_models.py .
-RUN python download_models.py
-
-# Expose port
-EXPOSE 7860
-
-# Run
-CMD ["rembg", "s", "--host", "0.0.0.0", "--port", "7860"]
-```
-
-#### 2.4.2 Create `docker-compose.yml`
-
-```yaml
-version: '3.8'
-
-services:
-  app:
-    build: .
-    ports:
-      - "7860:7860"
-    volumes:
-      - models:/root/.u2net
-    environment:
-      - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}
-      - GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET}
-
-volumes:
-  models:
-```
-
-#### 2.4.3 Build & Run
+### Random Secret Key Generate Karo:
 
 ```bash
-# Build
-docker-compose up --build
-
-# Ya
-docker build -t khan-jan-seva .
-docker run -p 7860:7860 -v $(pwd)/models:/root/.u2net khan-jan-seva
+openssl rand -hex 32
 ```
+
+Ya online: https://randomkeygen.com/
 
 ---
 
-## 📦 Step 3: Auto-Download Models Script
+## Step 5: Google OAuth Configure Karo (Important!)
 
-**Create `download_models.py`:**
+### Production Redirect URIs Update Karo:
 
-```python
-#!/usr/bin/env python3
-"""Download all models on deployment"""
+1. **Google Cloud Console** → **APIs & Services** → **Credentials**
 
-import os
-import sys
+2. **OAuth 2.0 Client ID** pe click karo
 
-MODELS = [
-    ("u2net", "u2net.onnx"),
-    ("u2netp", "u2netp.onnx"),
-    ("u2net_human_seg", "u2net_human_seg.onnx"),
-    ("u2net_cloth_seg", "u2net_cloth_seg.onnx"),
-    ("silueta", "silueta.onnx"),
-    ("isnet-general-use", "isnet-general-use.onnx"),
-    ("isnet-anime", "isnet-anime.onnx"),
-    ("bria-rmbg", "bria-rmbg-2.0.onnx"),
-    ("sam", "sam"),  # Special case
-]
+3. **Authorized Redirect URIs** add karo:
 
-print("📥 Downloading models...")
-
-for model_name, filename in MODELS:
-    try:
-        print(f"  Downloading {model_name}...", end=" ")
-        from rembg.session_factory import new_session
-        session = new_session(model_name)
-        print("✅")
-    except Exception as e:
-        print(f"❌ {e}")
-
-print("✨ All models ready!")
+**For Railway:**
 ```
+https://khanjanseva-production.up.railway.app/auth/callback
+```
+
+**For Render:**
+```
+https://khanjanseva.onrender.com/auth/callback
+```
+
+**For Custom Domain:**
+```
+https://yourdomain.com/auth/callback
+```
+
+4. **Authorized JavaScript Origins** add karo:
+```
+https://khanjanseva-production.up.railway.app
+https://khanjanseva.onrender.com
+```
+
+5. **Save** karo
 
 ---
 
-## 🚀 Quick Deploy Checklist
+## Step 6: Instamojo Webhook Configure Karo
 
-### 1. Files Check Karo:
-```bash
-ls -la
-# Hona chahiye:
-# - Dockerfile (agar Docker use kar rahe ho)
-# - requirements.txt
-# - Procfile (Heroku ke liye)
-# - render.yaml (Render ke liye)
-# - .gitignore
-```
+### Instamojo Dashboard:
 
-### 2. Environment Variables Set Karo:
-```bash
-# Production ke liye Google OAuth credentials
-GOOGLE_CLIENT_ID=your-production-client-id
-GOOGLE_CLIENT_SECRET=your-production-secret
-```
+1. **API & Plugins** → **Webhooks**
 
-### 3. Google OAuth Settings Update Karo:
-Google Cloud Console mein:
-```
-Authorized JavaScript Origins:
-- https://your-app.com
-- https://your-app.railway.app
+2. **New Webhook** add karo:
 
-Authorized Redirect URIs:
-- https://your-app.com/auth/callback
-- https://your-app.railway.app/auth/callback
-```
+| Field | Value |
+|-------|-------|
+| Webhook URL | `https://khanjanseva-production.up.railway.app/api/payments/webhook` |
+| Secret | `4e57693050da4345984d7d1360149032` |
+
+3. **Save** karo
 
 ---
 
-## 🎯 Recommended: Railway (Easiest)
+## Step 7: Domain Connect Karo (Optional)
 
-```bash
-# 1. Install Railway CLI
-npm install -g @railway/cli
+### Custom Domain Add Karo:
 
-# 2. Login
-railway login
+**Railway:**
+1. Dashboard → Settings → Domains
+2. **Add Custom Domain**
+3. DNS records add karo
 
-# 3. Initialize
-railway init
+**Render:**
+1. Dashboard → Settings → Custom Domains
+2. **Add Domain**
+3. DNS configure karo
 
-# 4. Deploy
-railway up
+### DNS Records:
 
-# 5. Domain milegi automatically
-# Example: https://khan-jan-seva.up.railway.app
-```
-
----
-
-## 📊 Deployment Comparison
-
-| Platform | Free Tier | Models | Difficulty | Best For |
-|----------|-----------|--------|------------|----------|
-| **Railway** | ✅ $5/month credit | Auto-download | Easy | Production |
-| **Render** | ✅ | Auto-download | Easy | Production |
-| **Heroku** | ✅ (sleep after 30min) | Auto-download | Medium | Testing |
-| **Docker** | Self-hosted | Persistent | Hard | Advanced |
+| Type | Name | Value |
+|------|------|-------|
+| CNAME | @ | `khanjanseva-production.up.railway.app` |
+| CNAME | www | `khanjanseva-production.up.railway.app` |
 
 ---
 
-## ⚡ Quick Commands
+## Step 8: SSL/HTTPS (Auto)
+
+Railway aur Render automatically SSL certificate provide karte hain:
+- ✅ HTTPS enabled by default
+- ✅ Auto-renewal
+
+---
+
+## Verification Checklist
+
+Deployment ke baad verify karo:
+
+- [ ] Website load ho raha hai: `https://your-domain.com`
+- [ ] Login kaam kar raha hai (Google OAuth)
+- [ ] Dashboard accessible hai
+- [ ] Image processing kaam kar raha hai
+- [ ] Payment integration working hai
+- [ ] Webhook credits add kar raha hai
+
+---
+
+## Troubleshooting
+
+### Error: "redirect_uri_mismatch"
+**Solution:** Google Console mein redirect URI exactly match hona chahiye production URL se.
+
+### Error: "Payment webhook not working"
+**Solution:** Instamojo dashboard mein webhook URL https se start honi chahiye, http nahi.
+
+### Error: "Database connection failed"
+**Solution:** Railway/Render automatically database provide karte hain. Local SQLite use mat karo production mein.
+
+### Error: "Session not persisting"
+**Solution:** `SESSION_SECRET_KEY` set karo aur strong banao (32+ characters).
+
+---
+
+## Files Created for Deployment
+
+| File | Purpose |
+|------|---------|
+| `Procfile` | Heroku config |
+| `render.yaml` | Render config |
+| `railway.json` | Railway config |
+| `docker-compose.yml` | Docker deployment |
+| `runtime.txt` | Python version |
+| `.gitignore` | Git ignore rules |
+| `.github/workflows/deploy.yml` | CI/CD pipeline |
+
+---
+
+## Quick Commands Summary
 
 ```bash
 # GitHub push
-git add .
-git commit -m "Ready for deployment"
-git push origin main
+./github_push.sh
 
-# Railway deploy
-railway up
+# Heroku deploy
+heroku create khanjanseva && git push heroku main
 
-# Render (automatic on push)
-# Just push to GitHub
-
-# Docker
+# Docker deploy
 docker-compose up -d
+
+# Local test
+GOOGLE_CLIENT_SECRET='GOCSPX-...' rembg s --host 0.0.0.0 --port 7000
 ```
 
 ---
 
-## 🔥 Live URL Milne Ke Baad
+## Support
 
-1. **Test karo**: `https://your-app.com`
-2. **Login check karo**: `https://your-app.com/login`
-3. **API test karo**: `https://your-app.com/api`
-4. **Models download honge automatically** (first time thoda slow)
+Deployment mein koi problem aaye toh:
+1. Platform logs check karo (Railway/Render dashboard)
+2. Environment variables verify karo
+3. Google OAuth settings check karo
 
-**Koi bhi issue aaye toh batana!** 🚀
+**Documentation:**
+- `DEPLOYMENT.md` - Detailed deployment guide
+- `WEBHOOK_SETUP.md` - Webhook configuration
+- `GOOGLE_OAUTH_SETUP.md` - OAuth setup
+
+---
+
+**Ready to deploy! 🚀**

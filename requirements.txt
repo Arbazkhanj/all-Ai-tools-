@@ -7,6 +7,9 @@ authlib
 itsdangerous
 google-auth
 
+# Database
+sqlalchemy>=2.0.0
+
 # Server
 uvicorn
 fastapi

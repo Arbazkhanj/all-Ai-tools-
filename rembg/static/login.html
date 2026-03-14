@@ -295,14 +295,6 @@
                 Continue with Google
             </a>
 
-            <div class="divider">
-                <span>or</span>
-            </div>
-
-            <a href="/" class="guest-btn">
-                Continue as Guest
-            </a>
-
             <div class="features">
                 <div class="feature-item">
                     <i class="fas fa-check-circle"></i>
@@ -364,6 +356,14 @@
             } else {
                 document.getElementById('userAvatar').src = 'https://ui-avatars.com/api/?name=' + encodeURIComponent(user.name || 'U') + '&background=667eea&color=fff&size=200';
             }
+            
+            // Store user in localStorage
+            localStorage.setItem('user', JSON.stringify(user));
+            
+            // Redirect to home after 2 seconds
+            setTimeout(() => {
+                window.location.href = '/';
+            }, 2000);
         }
 
         // Handle Google login click
