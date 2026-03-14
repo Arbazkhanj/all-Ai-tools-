@@ -119,10 +119,6 @@ def s_command(port: int, host: str, log_level: str, threads: int) -> None:
     This function starts the FastAPI web server with the specified port and log level.
     If the number of worker threads is specified, it sets the thread limiter accordingly.
     """
-    # Initialize database
-    init_db()
-    seed_initial_data()
-    
     sessions: dict[str, BaseSession] = {}
     tags_metadata = [
         {
@@ -368,7 +364,12 @@ def s_command(port: int, host: str, log_level: str, threads: int) -> None:
         )
 
     @app.on_event("startup")
-    def startup():
+    async def startup():
+        # Initialize database
+        init_db()
+        seed_initial_data()
+        
+        # Open browser in development (skip in production)
         try:
             webbrowser.open(f"http://{'localhost' if host == '0.0.0.0' else host}:{port}")
         except Exception:
