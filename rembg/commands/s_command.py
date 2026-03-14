@@ -365,15 +365,20 @@ def s_command(port: int, host: str, log_level: str, threads: int) -> None:
 
     @app.on_event("startup")
     async def startup():
-        # Initialize database
-        init_db()
-        seed_initial_data()
-        
-        # Open browser in development (skip in production)
+        # Initialize database (with error handling)
         try:
-            webbrowser.open(f"http://{'localhost' if host == '0.0.0.0' else host}:{port}")
-        except Exception:
-            pass
+            init_db()
+            seed_initial_data()
+            print("✅ Database initialized successfully")
+        except Exception as e:
+            print(f"⚠️ Database initialization warning: {e}")
+        
+        # Open browser in development (skip in production/Railway)
+        if not os.getenv("RAILWAY_ENVIRONMENT"):
+            try:
+                webbrowser.open(f"http://{'localhost' if host == '0.0.0.0' else host}:{port}")
+            except Exception:
+                pass
 
         if threads is not None:
             from anyio import CapacityLimiter

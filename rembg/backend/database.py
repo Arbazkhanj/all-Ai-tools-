@@ -8,7 +8,9 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import Session, sessionmaker
 
 # Database URL - use SQLite by default, can be configured via environment variable
-DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./rembg_payments.db")
+# Use /tmp for Railway (ephemeral storage), or current directory for local
+default_db_path = "/tmp/rembg_payments.db" if os.getenv("RAILWAY_ENVIRONMENT") else "./rembg_payments.db"
+DATABASE_URL = os.getenv("DATABASE_URL", f"sqlite:///{default_db_path}")
 
 # Create engine
 engine = create_engine(
